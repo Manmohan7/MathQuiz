@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Game from './Game';
+import Score from './Score'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    totalAnswers: 0,
+    correctAnswers: 0
+  };
+
+  updateMarks = (isCorrect) => {
+    let correct = isCorrect ? 1 : 0
+    
+    this.setState((current) => ({
+      correctAnswers: current.correctAnswers + correct,
+      totalAnswers: current.totalAnswers + 1
+    }))
+  };
+  
+  render() {
+    return (
+      <div className="App">
+        <h1> Math Quiz </h1>
+        <h3> Is this True or False? </h3>
+        <Game updateMarks={this.updateMarks} />
+        <Score correctAnswers={this.state.correctAnswers} totalAnswers={this.state.totalAnswers} />
+      </div>
+    )
+  }
 }
 
 export default App;
